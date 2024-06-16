@@ -4,5 +4,5 @@
 
 <template>
     <HeaderPanel />
-    <section>Gallery</section>
+    Likes
 </template>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-
+    import HeaderPanel from '../components/HeaderPanel.vue'
 </script>
 
 <template>
-  <section>Breeds</section>
+    <HeaderPanel />
+    <section>Breeds</section>
 </template>
