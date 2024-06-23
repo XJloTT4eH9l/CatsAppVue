@@ -133,3 +133,15 @@ body {
     height: 100vh;
     padding: 30px;
 }
+
+.page-container {
+    padding: 20px;
+    border-radius: 20px;
+    background-color: $white;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
