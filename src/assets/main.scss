@@ -130,6 +130,7 @@ body {
 }
 
 .main-content {
+    width: 740px;
     height: 100vh;
     padding: 30px;
 }
@@ -144,4 +145,5 @@ body {
     display: flex;
     align-items: center;
     column-gap: 10px;
+    margin-bottom: 20px;
 }
