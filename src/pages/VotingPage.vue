@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue'
+    import { useSavedCats } from '@/stores/savedCats'
 
     import { VOTING_IMG } from '@/catApi'
     import type { catObject } from '@/types'
@@ -9,6 +10,8 @@
     import PageTitle from '../components/PageTitle.vue'
     import Loader from '../components/Loader.vue'
 
+    const savedCatsStore = useSavedCats();
+    
     const catInfo = ref<catObject | null>(null);
     const isLoading = ref<boolean>(false);
 
@@ -31,9 +34,19 @@
 
         isLoading.value = false;
     }
+
+    const saveCat = (type: string) => {
+        if(!catInfo.value) {
+            return
+        }
+
+        savedCatsStore.addCatToSaved(catInfo.value, type);
+        
+        getCatInfo();
+    }
     
     onMounted(() => {
-        getCatInfo();
+        getCatInfo()
     })
 </script>
 
@@ -56,9 +69,9 @@
                     :alt="catInfo.id"
                 >
                 <div class="voting-actions">
-                    <button @click="getCatInfo" class="voting-actions__button like"></button>
-                    <button class="voting-actions__button favorite"></button>
-                    <button @click="getCatInfo" class="voting-actions__button dislike"></button>
+                    <button @click="saveCat('likes')" class="voting-actions__button like"></button>
+                    <button @click="saveCat('favorite')" class="voting-actions__button favorite"></button>
+                    <button @click="saveCat('dislikes')" class="voting-actions__button dislike"></button>
                 </div>
             </template>
         </div>
