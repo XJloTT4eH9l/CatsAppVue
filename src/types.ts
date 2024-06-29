@@ -5,4 +5,11 @@ type catObject = {
     hegth?: number | undefined;
 }
 
-export type { catObject }
+type userActionType = {
+    id: string,
+    status: string,
+    type: string,
+    time: string
+}
+
+export type { catObject, userActionType }

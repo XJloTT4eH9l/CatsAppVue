@@ -5,6 +5,7 @@
     import BackButton from '@/components/BackButton.vue'
     import PageTitle from '@/components/PageTitle.vue'
     import CatList from '@/components/CatList.vue';
+    import UserActionLogs from '@/components/UserActionLogs.vue';
 
     const savedCatsStore = useSavedCats();
 </script>
@@ -24,5 +25,10 @@
         />
 
         <h2 class="title-empty" v-else>No cats found</h2>
+
+        <UserActionLogs 
+            v-if="savedCatsStore.getFavoriteLogs.length > 0"
+            :logs="savedCatsStore.getFavoriteLogs" 
+        /> 
     </section>
 </template>

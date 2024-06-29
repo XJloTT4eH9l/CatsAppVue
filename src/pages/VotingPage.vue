@@ -5,10 +5,11 @@
     import { VOTING_IMG } from '@/catApi'
     import type { catObject } from '@/types'
 
-    import HeaderPanel from '../components/HeaderPanel.vue'
-    import BackButton from '../components/BackButton.vue'
-    import PageTitle from '../components/PageTitle.vue'
-    import Loader from '../components/Loader.vue'
+    import HeaderPanel from '@/components/HeaderPanel.vue'
+    import BackButton from '@/components/BackButton.vue'
+    import PageTitle from '@/components/PageTitle.vue'
+    import Loader from '@/components/Loader.vue'
+    import UserActionLogs from '@/components/UserActionLogs.vue';
 
     const savedCatsStore = useSavedCats();
     
@@ -57,6 +58,7 @@
             <BackButton />
             <PageTitle />
         </div>
+
         <div class="img-container">
             <Loader v-if="isLoading" />
             <template v-else>
@@ -75,6 +77,11 @@
                 </div>
             </template>
         </div>
+
+        <UserActionLogs 
+            v-if="savedCatsStore.userLogs.length > 0"
+            :logs="savedCatsStore.userLogs" 
+        /> 
     </section>
 </template>
 
@@ -83,13 +90,17 @@
 
     .img-container {
         position: relative;
-        width: 640px;
+        width: 100%;
         height: 360px;
+        margin-bottom: 20px;
         overflow: hidden;
         border-radius: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
+        @media screen and (max-width: 1230px) {
+            height: 460px;
+        }
     }
     .cat-img {
         width: 100%;
