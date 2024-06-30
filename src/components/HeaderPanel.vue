@@ -1,20 +1,22 @@
-<script lang="ts">
-    import { RouterLink } from 'vue-router'
-    export default {
-        name: 'HeaderPanel'
-    }
+<script setup lang="ts">
+    import { RouterLink } from 'vue-router';
+
+    import MobileMenu from '@/components/MobileMenu.vue';
 </script>
 
 <template>
     <header class="header">
-        <div class="header__input-container">
-            <label class="header__search-icon" for="search"/>
-            <input
-                type="text"
-                id="search"
-                class="header__input"
-                placeholder="Search for breeds by name"
-            >
+        <div class="header__left">
+            <MobileMenu />
+            <div class="header__input-container">
+                <label class="header__search-icon" for="search"/>
+                <input
+                    type="text"
+                    id="search"
+                    class="header__input"
+                    placeholder="Search for breeds by name"
+                >
+            </div>
         </div>
         <div class="header__links">
             <RouterLink class="header__link likes" to="/likes" />
@@ -24,21 +26,35 @@
     </header>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
     @import '../assets/variables.scss';
 
     .header {
+        position: relative;
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 10px;
         margin-bottom: 10px;
+        @media screen and (max-width: 680px) {
+            padding-bottom: 50px;
+        }
+        &__left {
+            display: flex;
+            gap: 10px;
+        }
         &__links {
             display: flex;
             gap: 10px;
         }
         &__input-container {
             position: relative;
+            @media screen and (max-width: 680px) {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+            }
         }
         &__search-icon {
             position: absolute;
@@ -63,6 +79,9 @@
             background-color: $white;
             border: 2px solid transparent;
             transition: border-color .2s linear;
+            @media screen and (max-width: 680px) {
+                width: 100%;
+            }
             &:hover {
                 border-color: $pink_hover;
             }
@@ -105,6 +124,12 @@
                     background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_1_6)'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 10C0 4.47715 4.47715 0 10 0C15.5229 0 20 4.47715 20 10C20 15.5229 15.5229 20 10 20C4.47715 20 0 15.5229 0 10ZM10 1.33333C5.21353 1.33333 1.33333 5.21353 1.33333 10C1.33333 14.7865 5.21353 18.6667 10 18.6667C14.7865 18.6667 18.6667 14.7865 18.6667 10C18.6667 5.21353 14.7865 1.33333 10 1.33333ZM6.66667 8H5.33333V6.66667H6.66667V8ZM14.6667 8H13.3333V6.66667H14.6667V8ZM5.06667 13.4667L5.46667 12.9333C7.73333 9.91113 12.2667 9.91113 14.5333 12.9333L14.9333 13.4667L13.8667 14.2667L13.4667 13.7333C11.7333 11.4222 8.26667 11.4222 6.53333 13.7333L6.13333 14.2667L5.06667 13.4667Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1_6'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
                 }
                 background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_1_6)'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 10C0 4.47715 4.47715 0 10 0C15.5229 0 20 4.47715 20 10C20 15.5229 15.5229 20 10 20C4.47715 20 0 15.5229 0 10ZM10 1.33333C5.21353 1.33333 1.33333 5.21353 1.33333 10C1.33333 14.7865 5.21353 18.6667 10 18.6667C14.7865 18.6667 18.6667 14.7865 18.6667 10C18.6667 5.21353 14.7865 1.33333 10 1.33333ZM6.66667 8H5.33333V6.66667H6.66667V8ZM14.6667 8H13.3333V6.66667H14.6667V8ZM5.06667 13.4667L5.46667 12.9333C7.73333 9.91113 12.2667 9.91113 14.5333 12.9333L14.9333 13.4667L13.8667 14.2667L13.4667 13.7333C11.7333 11.4222 8.26667 11.4222 6.53333 13.7333L6.13333 14.2667L5.06667 13.4667Z' fill='%23FF868E'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1_6'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+            }
+            &.burger-open {
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_1_2)'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M20 1.33333H0V0H20V1.33333ZM20 6.66667H0V5.33333H20V6.66667ZM20 12H0V10.6667H20V12Z' fill='%23FF868E'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1_2'%3E%3Crect width='20' height='12' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
+            }
+            &.burger-close {
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_3_2)'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M8.91223 9.99968L0.225357 1.31283L1.31321 0.224976L10.0001 8.91184L18.6869 0.224976L19.7748 1.31283L11.0879 9.99968L19.7748 18.6865L18.6869 19.7744L10.0001 11.0875L1.31321 19.7744L0.225357 18.6865L8.91223 9.99968Z' fill='%23FF868E'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_3_2'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
             }
         }
     }

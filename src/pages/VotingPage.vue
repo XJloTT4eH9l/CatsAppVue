@@ -101,6 +101,12 @@
         @media screen and (max-width: 1230px) {
             height: 460px;
         }
+        @media screen and (max-width: 800px) {
+            height: 360px;
+        }
+        @media screen and (max-width: 500px) {
+            height: 260px;
+        }
     }
     .cat-img {
         width: 100%;
@@ -118,6 +124,10 @@
         border-radius: 20px;
         border: 3px solid $white;
         overflow: hidden;
+        @media screen and (max-width: 800px) {
+            border: 2px solid $white;
+            border-radius: 12px;
+        }
         &__button {
             width: 50px;
             height: 50px;
@@ -125,9 +135,16 @@
             background-repeat: no-repeat;
             background-position: center;
             transition: background-color 0.2s linear;
+            @media screen and (max-width: 800px) {
+                width: 35px;
+                height: 35px;
+            }
             &.like {
                 background-color: $green;
                 border-right: 3px solid $white;
+                @media screen and (max-width: 800px) {
+                    border-right: 2px solid $white;
+                }
                 background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_1_2)'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 10C0 4.47715 4.47715 0 10 0C15.5229 0 20 4.47715 20 10C20 15.5229 15.5229 20 10 20C4.47715 20 0 15.5229 0 10ZM10 1.33333C5.21353 1.33333 1.33333 5.21353 1.33333 10C1.33333 14.7865 5.21353 18.6667 10 18.6667C14.7865 18.6667 18.6667 14.7865 18.6667 10C18.6667 5.21353 14.7865 1.33333 10 1.33333ZM6.66667 8H5.33333V6.66667H6.66667V8ZM14.6667 8H13.3333V6.66667H14.6667V8ZM6.13333 11.0667L6.53333 11.6C8.26667 13.9111 11.7333 13.9111 13.4667 11.6L13.8667 11.0667L14.9333 11.8667L14.5333 12.4C12.2667 15.4222 7.73333 15.4222 5.46667 12.4L5.06667 11.8667L6.13333 11.0667Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1_2'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
                 &:hover {
                     background-color: $green_hover;
@@ -143,6 +160,9 @@
             &.dislike {
                 background-color: $orange;
                 border-left: 3px solid $white;
+                @media screen and (max-width: 800px) {
+                    border-left: 2px solid $white;
+                }
                 background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_1_6)'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 10C0 4.47715 4.47715 0 10 0C15.5229 0 20 4.47715 20 10C20 15.5229 15.5229 20 10 20C4.47715 20 0 15.5229 0 10ZM10 1.33333C5.21353 1.33333 1.33333 5.21353 1.33333 10C1.33333 14.7865 5.21353 18.6667 10 18.6667C14.7865 18.6667 18.6667 14.7865 18.6667 10C18.6667 5.21353 14.7865 1.33333 10 1.33333ZM6.66667 8H5.33333V6.66667H6.66667V8ZM14.6667 8H13.3333V6.66667H14.6667V8ZM5.06667 13.4667L5.46667 12.9333C7.73333 9.91113 12.2667 9.91113 14.5333 12.9333L14.9333 13.4667L13.8667 14.2667L13.4667 13.7333C11.7333 11.4222 8.26667 11.4222 6.53333 13.7333L6.13333 14.2667L5.06667 13.4667Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1_6'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
                 &:hover {
                     background-color: $orange_hover;
