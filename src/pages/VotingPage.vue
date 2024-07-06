@@ -112,6 +112,7 @@
         width: 100%;
         height: auto;
         border-radius: 20px;
+        object-fit: cover;
     }
 
     .voting-actions {

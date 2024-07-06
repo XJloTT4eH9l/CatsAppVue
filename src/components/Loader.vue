@@ -8,8 +8,8 @@
     .loader {
         width: 50px;
         height: 50px;
+        margin: auto;
         border-radius: 50%;
-        display: inline-block;
         border-top: 3px solid $pink_hover;
         border-right: 3px solid transparent;
         box-sizing: border-box;
