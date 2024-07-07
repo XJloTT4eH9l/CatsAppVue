@@ -1,17 +1,19 @@
 <script setup lang="ts">
-    import { ref, onMounted } from 'vue'
-    import { useSavedCats } from '@/stores/savedCats'
+    import { ref, onMounted } from 'vue';
+    import { useSavedCats } from '@/stores/savedCats';
+    import { useUserLogs } from '@/stores/userLogs';
 
-    import { VOTING_IMG } from '@/catApi'
-    import type { catObject } from '@/types'
+    import { VOTING_IMG } from '@/catApi';
+    import type { catObject } from '@/types';
 
-    import HeaderPanel from '@/components/HeaderPanel.vue'
-    import BackButton from '@/components/BackButton.vue'
-    import PageTitle from '@/components/PageTitle.vue'
-    import Loader from '@/components/Loader.vue'
+    import HeaderPanel from '@/components/HeaderPanel.vue';
+    import BackButton from '@/components/BackButton.vue';
+    import PageTitle from '@/components/PageTitle.vue';
+    import Loader from '@/components/Loader.vue';
     import UserActionLogs from '@/components/UserActionLogs.vue';
 
     const savedCatsStore = useSavedCats();
+    const userLogsStore = useUserLogs();
     
     const catInfo = ref<catObject | null>(null);
     const isLoading = ref<boolean>(false);
@@ -79,8 +81,8 @@
         </div>
 
         <UserActionLogs 
-            v-if="savedCatsStore.userLogs.length > 0"
-            :logs="savedCatsStore.userLogs" 
+            v-if="userLogsStore.userLogs.length > 0"
+            :logs="userLogsStore.userLogs" 
         /> 
     </section>
 </template>

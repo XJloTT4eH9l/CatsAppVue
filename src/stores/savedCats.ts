@@ -1,14 +1,16 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import type { catObject, userActionType } from '@/types';
+import { useUserLogs } from '@/stores/userLogs';
+import type { catObject } from '@/types';
+import type { Ref } from 'vue';
 
 export const useSavedCats = defineStore('savedCats', () => {
-    const likedCats = ref<catObject[]>([]);
-    const dislikedCats = ref<catObject[]>([]);
-    const favoriteCats = ref<catObject[]>([]);
-    const userLogs = ref<userActionType[]>([]);
+    const likedCats: Ref<catObject[]> = ref([]);
+    const dislikedCats: Ref<catObject[]> = ref([]);
+    const favoriteCats: Ref<catObject[]> = ref([]);
+    const userLogsStore = useUserLogs();
 
-    const addCatToSaved = (cat: catObject, type: string) => {
+    const addCatToSaved = (cat: catObject, type: string): void => {
         switch (type) {
             case 'likes': 
                 likedCats.value.push(cat);
@@ -21,17 +23,10 @@ export const useSavedCats = defineStore('savedCats', () => {
                 break;
         }
 
-        const userAction: userActionType = {
-            id: cat.id,
-            status: 'added',
-            type,
-            time: getCurrentTime()
-        }
-
-        userLogs.value.push(userAction);
+        userLogsStore.addLog(cat.id, 'added', type);
     }
 
-    const removeCatFromSaved = (id: string, type: string) => {
+    const removeCatFromSaved = (id: string, type: string): void => {
         switch (type) {
             case 'likes': 
                 likedCats.value = likedCats.value.filter(cat => cat.id !== id);
@@ -44,40 +39,14 @@ export const useSavedCats = defineStore('savedCats', () => {
                 break;
         }
 
-        const userAction: userActionType = {
-            id,
-            status: 'removed',
-            type,
-            time: getCurrentTime()
-        }
-
-        userLogs.value.push(userAction);
+        userLogsStore.addLog(id, 'removed', type);
     }
-
-    const getLikesLogs = computed<userActionType[]>(() => userLogs.value.filter(log => log.type === 'likes'));
-    const getDislikesLogs = computed<userActionType[]>(() => userLogs.value.filter(log => log.type === 'dislikes'));
-    const getFavoriteLogs = computed<userActionType[]>(() => userLogs.value.filter(log => log.type === 'favorite'));
-
-    const getCurrentTime = (): string => {
-        const now = new Date();
-        let hours: string | number = now.getHours();
-        let minutes: string | number = now.getMinutes();
-
-        hours = hours < 10 ? '0' + hours : hours;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-
-        return `${hours}:${minutes}`;
-    }
-
+    
     return {
         likedCats, 
         dislikedCats, 
         favoriteCats, 
         addCatToSaved, 
         removeCatFromSaved, 
-        userLogs,
-        getLikesLogs,
-        getDislikesLogs,
-        getFavoriteLogs
     }
 });

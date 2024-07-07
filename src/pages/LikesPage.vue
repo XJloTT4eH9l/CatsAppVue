@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { useSavedCats } from '@/stores/savedCats';
+    import { useUserLogs } from '@/stores/userLogs';
 
     import HeaderPanel from '@/components/HeaderPanel.vue';
     import BackButton from '@/components/BackButton.vue';
@@ -8,6 +9,7 @@
     import UserActionLogs from '@/components/UserActionLogs.vue';
 
     const savedCatsStore = useSavedCats();
+    const userLogsStore = useUserLogs();
 </script>
 
 <template>
@@ -27,8 +29,8 @@
         <h2 class="title-empty"v-else>No cats found</h2>
 
         <UserActionLogs 
-            v-if="savedCatsStore.getLikesLogs.length > 0"
-            :logs="savedCatsStore.getLikesLogs" 
+            v-if="userLogsStore.getLikesLogs.length > 0"
+            :logs="userLogsStore.getLikesLogs" 
         /> 
     </section>
 </template>

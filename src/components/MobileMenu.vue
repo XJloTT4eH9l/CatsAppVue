@@ -45,7 +45,7 @@
         padding: 80px 30px 30px 30px;
         background-color: white;
         transition: left 0.3s ease-in;
-        z-index: 10;
+        z-index: 30;
         & .nav__list {
             justify-content: center;
         }
