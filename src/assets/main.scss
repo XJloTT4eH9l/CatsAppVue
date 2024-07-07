@@ -11,12 +11,12 @@ body {
 .container {
     max-width: 1300px;
     height: 100%;
-    padding: 0 15px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 40% 60%;
     @media screen and (max-width: 1230px) {
         grid-template-columns: 1fr;
+        padding: 0 15px;
     }
 }
 
@@ -168,7 +168,7 @@ body {
 .main-content {
     padding: 30px;
     @media screen and (max-width: 1230px) {
-        padding: 30px 0;
+        padding: 15px 0;
     }
 }
 
@@ -181,8 +181,68 @@ body {
 .page-header {
     display: flex;
     align-items: center;
-    column-gap: 10px;
+    gap: 10px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    &--breeds {
+        justify-content: space-between;
+        gap: 15px;
+    }
+    &__left,
+    &__right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        @media screen and (max-width: 768px) {
+            width: 100%;
+        }
+    }
+    .sorting-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background-color: $gray_light;
+        border: 2px solid transparent;
+        transition: border-color 0.2s linear;
+        &::before {
+            content: '';
+            width: 20px;
+            height: 22px;
+            min-width: 20px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        &.up {
+            &.active {
+                &::before {
+                    background-image: url("data:image/svg+xml,%3Csvg width='19' height='20' viewBox='0 0 19 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4 0.195262C4.26035 -0.0650874 4.68246 -0.0650874 4.94281 0.195262L8.94281 4.19526L8 5.13807L5.13807 2.27614V20H3.80474V2.27614L0.942809 5.13807L0 4.19526L4 0.195262ZM15.1381 1.33333C14.0335 1.33333 13.1381 2.22876 13.1381 3.33333V5.33333H17.1381V3.33333C17.1381 2.22876 16.2426 1.33333 15.1381 1.33333ZM17.1381 6.66667V9.33333H18.4714V3.33333C18.4714 1.49238 16.979 1.98682e-08 15.1381 1.98682e-08C13.2971 1.98682e-08 11.8047 1.49238 11.8047 3.33333V9.33333H13.1381V6.66667H17.1381ZM11.8047 10.6667H15.8047C17.2775 10.6667 18.4714 11.8606 18.4714 13.3333C18.4714 14.1298 18.1222 14.8447 17.5686 15.3333C18.1222 15.822 18.4714 16.5369 18.4714 17.3333C18.4714 18.8061 17.2775 20 15.8047 20H11.8047V10.6667ZM15.8047 14.6667C16.5411 14.6667 17.1381 14.0697 17.1381 13.3333C17.1381 12.597 16.5411 12 15.8047 12H13.1381V14.6667H15.8047ZM13.1381 16H15.8047C16.5411 16 17.1381 16.597 17.1381 17.3333C17.1381 18.0697 16.5411 18.6667 15.8047 18.6667H13.1381V16Z' fill='%23FF868E'/%3E%3C/svg%3E%0A");
+                }
+            }
+            &::before {
+                background-image: url("data:image/svg+xml,%3Csvg width='19' height='22' viewBox='0 0 19 22' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4 0.212836C4.26035 -0.0709453 4.68246 -0.0709453 4.94281 0.212836L8.94281 4.57284L8 5.6005L5.13807 2.48099V21.8H3.80474V2.48099L0.942809 5.6005L0 4.57284L4 0.212836ZM15.1381 1.45333C14.0335 1.45333 13.1381 2.42935 13.1381 3.63333V5.81333H17.1381V3.63333C17.1381 2.42935 16.2426 1.45333 15.1381 1.45333ZM17.1381 7.26667V10.1733H18.4714V3.63333C18.4714 1.6267 16.979 1.08282e-08 15.1381 1.08282e-08C13.2971 1.08282e-08 11.8047 1.6267 11.8047 3.63333V10.1733H13.1381V7.26667H17.1381ZM11.8047 11.6267H15.8047C17.2775 11.6267 18.4714 12.928 18.4714 14.5333C18.4714 15.4015 18.1222 16.1807 17.5686 16.7133C18.1222 17.2459 18.4714 18.0252 18.4714 18.8933C18.4714 20.4986 17.2775 21.8 15.8047 21.8H11.8047V11.6267ZM15.8047 15.9867C16.5411 15.9867 17.1381 15.336 17.1381 14.5333C17.1381 13.7307 16.5411 13.08 15.8047 13.08H13.1381V15.9867H15.8047ZM13.1381 17.44H15.8047C16.5411 17.44 17.1381 18.0907 17.1381 18.8933C17.1381 19.696 16.5411 20.3467 15.8047 20.3467H13.1381V17.44Z' fill='%238C8C8C'/%3E%3C/svg%3E");
+            }
+        }
+        &.down {
+            &.active {
+                &::before {
+                    background-image: url("data:image/svg+xml,%3Csvg width='19' height='20' viewBox='0 0 19 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.80474 17.7239V0H5.13807V17.7239L8 14.8619L8.94281 15.8047L4.94281 19.8047C4.81778 19.9298 4.64822 20 4.4714 20C4.29459 20 4.12502 19.9298 4 19.8047L0 15.8047L0.942809 14.8619L3.80474 17.7239ZM15.1381 1.33333C14.0335 1.33333 13.1381 2.22876 13.1381 3.33333V5.33333H17.1381V3.33333C17.1381 2.22876 16.2426 1.33333 15.1381 1.33333ZM17.1381 6.66667V9.33333H18.4714V3.33333C18.4714 1.49238 16.979 0 15.1381 0C13.2971 0 11.8047 1.49238 11.8047 3.33333V9.33333H13.1381V6.66667H17.1381ZM11.8047 10.6667H15.8047C17.2775 10.6667 18.4714 11.8606 18.4714 13.3333C18.4714 14.1298 18.1222 14.8447 17.5686 15.3333C18.1222 15.822 18.4714 16.5369 18.4714 17.3333C18.4714 18.8061 17.2775 20 15.8047 20H11.8047V10.6667ZM15.8047 14.6667C16.5411 14.6667 17.1381 14.0697 17.1381 13.3333C17.1381 12.597 16.5411 12 15.8047 12H13.1381V14.6667H15.8047ZM13.1381 16H15.8047C16.5411 16 17.1381 16.597 17.1381 17.3333C17.1381 18.0697 16.5411 18.6667 15.8047 18.6667H13.1381V16Z' fill='%23FF868E'/%3E%3C/svg%3E ");
+                }
+            }
+            &::before {
+                background-image: url("data:image/svg+xml,%3Csvg width='19' height='22' viewBox='0 0 19 22' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.80474 19.319V0H5.13807V19.319L8 16.1995L8.94281 17.2272L4.94281 21.5872C4.81778 21.7234 4.64822 21.8 4.4714 21.8C4.29459 21.8 4.12502 21.7234 4 21.5872L0 17.2272L0.942809 16.1995L3.80474 19.319ZM15.1381 1.45333C14.0335 1.45333 13.1381 2.42935 13.1381 3.63333V5.81333H17.1381V3.63333C17.1381 2.42935 16.2426 1.45333 15.1381 1.45333ZM17.1381 7.26667V10.1733H18.4714V3.63333C18.4714 1.6267 16.979 0 15.1381 0C13.2971 0 11.8047 1.6267 11.8047 3.63333V10.1733H13.1381V7.26667H17.1381ZM11.8047 11.6267H15.8047C17.2775 11.6267 18.4714 12.928 18.4714 14.5333C18.4714 15.4015 18.1222 16.1807 17.5686 16.7133C18.1222 17.2459 18.4714 18.0252 18.4714 18.8933C18.4714 20.4986 17.2775 21.8 15.8047 21.8H11.8047V11.6267ZM15.8047 15.9867C16.5411 15.9867 17.1381 15.336 17.1381 14.5333C17.1381 13.7307 16.5411 13.08 15.8047 13.08H13.1381V15.9867H15.8047ZM13.1381 17.44H15.8047C16.5411 17.44 17.1381 18.0907 17.1381 18.8933C17.1381 19.696 16.5411 20.3467 15.8047 20.3467H13.1381V17.44Z' fill='%238C8C8C'/%3E%3C/svg%3E%0A");
+            }
+        }
+        &:hover {
+            border-color: $pink_hover;
+        }
+        &.active {
+            border-color: $pink_hover;
+        }
+    }
 }
 
 .cats-list {
@@ -330,6 +390,78 @@ body {
         min-width: 20px;
         background-repeat: no-repeat;
         background-position: center;
+    }
+}
+
+.select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 110px;
+    height: 100%;
+    max-height: 40px;
+    padding: 8px 10px;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 10px;
+    color: $gray;
+    background-color: $gray_light;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.2s linear;
+    z-index: 20;
+    &:hover {
+        border-color: $pink_hover;
+    }
+    &.active {
+        .select__content {
+            display: block;
+        }
+        .select__overlay {
+            display: block;
+            cursor: default;
+        }
+    }
+    &::after {
+        content: '';
+        display: block;
+        width: 12px;
+        height: 12px;
+        min-width: 12px;
+        margin-left: 8px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_1_153)'%3E%3Cpath d='M6.59406 9.17417L11.7538 4.01436C12.0821 3.68616 12.0821 3.15395 11.7538 2.82587C11.4256 2.4978 10.8935 2.4978 10.5655 2.82587L5.99993 7.39154L1.43458 2.82606C1.10635 2.49792 0.574264 2.49792 0.24617 2.82606C-0.0820567 3.15414 -0.0820567 3.68628 0.24617 4.01447L5.40591 9.17431C5.57003 9.33836 5.78492 9.42029 5.9999 9.42029C6.21498 9.42029 6.43002 9.3382 6.59406 9.17417Z' fill='%238C8C8C'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1_153'%3E%3Crect width='12' height='12' fill='white' transform='matrix(0 -1 1 0 0 12)'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+    }
+    &__content {
+        display: none;
+        position: absolute;
+        width: 110px;
+        left: 0;
+        top: 45px;
+        z-index: 20;
+        background-color: $gray_light;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    &__item {
+        padding: 2px 10px;
+        transition: background-color 0.2s linear;
+        &.active {
+            color: $pink;
+        }
+        &:hover {
+            background-color: $pink_hover;
+        }
+    }
+    &__overlay {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 15;
     }
 }
 

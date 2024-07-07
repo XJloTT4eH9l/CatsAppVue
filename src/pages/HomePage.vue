@@ -17,7 +17,7 @@
 
 <style scoped lang="scss">
     .home-page {
-        height: 100%;
+        height: 90vh;
         border-radius: 16px;
         background-color: #fbe0dc;
         display: flex;

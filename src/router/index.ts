@@ -30,8 +30,7 @@ const router = createRouter({
     {
       path: '/breeds/:id',
       name: 'BreedsItemPage',
-      component: BreedsItemPage,
-      props: true
+      component: BreedsItemPage
     },
     {
       path: '/gallery',
