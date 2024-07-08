@@ -1,11 +1,13 @@
 <script setup lang="ts">
     import { useRoute } from 'vue-router'
-
+    defineProps<{
+        title?: string
+    }>()
     const currentRoute = useRoute().path.slice(1);
 </script>
 
 <template>
-    <div class="page-title">{{ currentRoute }}</div>
+    <div class="page-title" :class="title && 'light'">{{  title ? title : currentRoute }}</div>
 </template>
 
 <style lang="scss">
@@ -23,5 +25,9 @@
         color: $white;
         background-color: $pink;
         border-radius: 10px;
+        &.light {
+            color: $pink;
+            background-color: $pink_hover;
+        }
     }
 </style>

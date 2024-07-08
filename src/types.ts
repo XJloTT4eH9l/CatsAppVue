@@ -28,7 +28,8 @@ type breedItem = {
         width: number,
         height: number,
         url: string
-    }
+    },
+    reference_image_id: string;
 }
 
 type breedItemShort = Pick<breedItem, 'id' | 'name' | 'image'>
