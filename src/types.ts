@@ -12,11 +12,11 @@ type userActionType = {
     time: string
 }
 
-type breedItem = {
+type BreedItem = {
     id: string,
     name: string,
     description: string,
-    temparament: string,
+    temperament: string,
     origin: string,
     weight: {
         imperial: string,
@@ -29,9 +29,9 @@ type breedItem = {
         height: number,
         url: string
     },
-    reference_image_id: string;
+    reference_image_id?: string;
 }
 
-type breedItemShort = Pick<breedItem, 'id' | 'name' | 'image'>
+type BreedItemShort = Pick<BreedItem, 'id' | 'name' | 'image'>
 
-export type { catObject, userActionType, breedItem, breedItemShort }
+export type { catObject, userActionType, BreedItem, BreedItemShort }

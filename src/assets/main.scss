@@ -176,6 +176,9 @@ body {
     padding: 20px;
     border-radius: 20px;
     background-color: $white;
+    @media screen and (max-width: 768px) {
+        padding: 20px 10px;
+    }
 }
 
 .page-header {

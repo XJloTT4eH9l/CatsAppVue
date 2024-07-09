@@ -9,10 +9,10 @@
     import Loader from '@/components/Loader.vue';
 
     import { BREEDS } from '@/catApi';
-    import type { breedItemShort } from '@/types';
+    import type { BreedItemShort } from '@/types';
     import type { Ref } from 'vue';
 
-    const breedsList: Ref<breedItemShort[]> = ref([]);
+    const breedsList: Ref<BreedItemShort[]> = ref([]);
     const isLoading: Ref<boolean> = ref(false);
     const limitOptions: string[] = ['All', '5', '10', '15', '20'];
     const sorting: Ref<string> = ref('down');
@@ -27,7 +27,7 @@
         getBreeds(searchParams.toString());
     }
 
-    const sortBreeds = (breeds: breedItemShort[], direction: string): breedItemShort[] => {
+    const sortBreeds = (breeds: BreedItemShort[], direction: string): BreedItemShort[] => {
         return breeds.sort((a, b) => {
             const comparison = a.name.localeCompare(b.name);
             return direction === 'down' ? comparison : -comparison;
