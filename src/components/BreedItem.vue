@@ -1,9 +1,9 @@
 <script setup lang="ts">
     import { RouterLink } from 'vue-router';
-    import type { breedItemShort } from '@/types';
+    import type { BreedItemShort } from '@/types';
 
     defineProps<{
-        item: breedItemShort
+        item: BreedItemShort
     }>()
 </script>
 
