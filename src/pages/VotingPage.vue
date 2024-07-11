@@ -2,9 +2,9 @@
     import { ref, onMounted } from 'vue';
     import { useSavedCats } from '@/stores/savedCats';
     import { useUserLogs } from '@/stores/userLogs';
+    import { useApiRequests } from '@/stores/apiRequests';
 
-    import { VOTING_IMG } from '@/catApi';
-    import type { catObject } from '@/types';
+    import type { CatObject } from '@/types';
 
     import HeaderPanel from '@/components/HeaderPanel.vue';
     import BackButton from '@/components/BackButton.vue';
@@ -14,29 +14,9 @@
 
     const savedCatsStore = useSavedCats();
     const userLogsStore = useUserLogs();
+    const apiRequests = useApiRequests();
     
-    const catInfo = ref<catObject | null>(null);
-    const isLoading = ref<boolean>(false);
-
-    const getCatInfo = async () => {
-        isLoading.value = true;
-
-        try {
-            const responce = await fetch(VOTING_IMG);
-
-            if(!responce.ok) {
-                throw new Error('Cant get data')
-            }
-
-            const responceJson = await responce.json();
-
-            catInfo.value = responceJson[0];
-        } catch (error) {
-            console.log(error);
-        }
-
-        isLoading.value = false;
-    }
+    const catInfo = ref<CatObject | null>(null);
 
     const saveCat = (type: string) => {
         if(!catInfo.value) {
@@ -45,11 +25,23 @@
 
         savedCatsStore.addCatToSaved(catInfo.value, type);
         
-        getCatInfo();
+        apiRequests.getVote().then(result => {
+            if(!result) {
+                return
+            }
+            
+            catInfo.value = result[0];
+        });
     }
     
     onMounted(() => {
-        getCatInfo()
+        apiRequests.getVote().then(result => {
+            if(!result) {
+                return
+            }
+
+            catInfo.value = result[0];
+        });
     })
 </script>
 
@@ -62,10 +54,10 @@
         </div>
 
         <div class="img-container">
-            <Loader v-if="isLoading" />
+            <Loader v-if="apiRequests.isLoading" />
             <template v-else>
                 <img
-                    v-if="catInfo"  
+                    v-if="catInfo !== null"  
                     class="cat-img"
                     :src="catInfo.url"
                     :width="catInfo?.width"
@@ -87,7 +79,7 @@
     </section>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
     @import '../assets/variables.scss';
 
     .img-container {

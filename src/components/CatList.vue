@@ -1,9 +1,9 @@
 <script setup lang="ts">
     import { useSavedCats } from '@/stores/savedCats';
-    import type { catObject } from '@/types';
+    import type { CatObject } from '@/types';
 
     defineProps<{
-        catList: catObject[]
+        catList: CatObject[]
         type: string
     }>()
 

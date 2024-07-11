@@ -29,7 +29,6 @@
 
             const responceJson = await responce.json();
             breedInfo.value = responceJson;
-            console.log(responceJson);
         } catch (error) {
             console.log(error)
         } finally {

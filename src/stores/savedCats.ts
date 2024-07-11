@@ -1,16 +1,16 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useUserLogs } from '@/stores/userLogs';
-import type { catObject } from '@/types';
+import type { CatObject } from '@/types';
 import type { Ref } from 'vue';
 
 export const useSavedCats = defineStore('savedCats', () => {
-    const likedCats: Ref<catObject[]> = ref([]);
-    const dislikedCats: Ref<catObject[]> = ref([]);
-    const favoriteCats: Ref<catObject[]> = ref([]);
+    const likedCats: Ref<CatObject[]> = ref([]);
+    const dislikedCats: Ref<CatObject[]> = ref([]);
+    const favoriteCats: Ref<CatObject[]> = ref([]);
     const userLogsStore = useUserLogs();
 
-    const addCatToSaved = (cat: catObject, type: string): void => {
+    const addCatToSaved = (cat: CatObject, type: string): void => {
         switch (type) {
             case 'likes': 
                 likedCats.value.push(cat);

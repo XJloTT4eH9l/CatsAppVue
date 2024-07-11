@@ -1,14 +1,14 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import type { Ref } from 'vue';
-import type { userActionType } from '@/types';
+import type { UserActionType } from '@/types';
 
 export const useUserLogs = defineStore('userLogs', () => {
-    const userLogs: Ref<userActionType[]> = ref([]);
+    const userLogs: Ref<UserActionType[]> = ref([]);
 
-    const getLikesLogs = computed<userActionType[]>(() => userLogs.value.filter(log => log.type === 'likes'));
-    const getDislikesLogs = computed<userActionType[]>(() => userLogs.value.filter(log => log.type === 'dislikes'));
-    const getFavoriteLogs = computed<userActionType[]>(() => userLogs.value.filter(log => log.type === 'favorite'));
+    const getLikesLogs = computed<UserActionType[]>(() => userLogs.value.filter(log => log.type === 'likes'));
+    const getDislikesLogs = computed<UserActionType[]>(() => userLogs.value.filter(log => log.type === 'dislikes'));
+    const getFavoriteLogs = computed<UserActionType[]>(() => userLogs.value.filter(log => log.type === 'favorite'));
 
     const getCurrentTime = (): string => {
         const now = new Date();
@@ -22,7 +22,7 @@ export const useUserLogs = defineStore('userLogs', () => {
     }
 
     const addLog = (id: string, status: string, type: string): void => {
-        const userLog: userActionType = {
+        const userLog: UserActionType = {
             id,
             status,
             type,

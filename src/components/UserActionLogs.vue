@@ -1,8 +1,8 @@
 <script setup lang="ts">
-    import type { userActionType } from '@/types';
+    import type { UserActionType } from '@/types';
 
     defineProps<{
-        logs: userActionType[]
+        logs: UserActionType[]
     }>()
 </script>
 

@@ -1,11 +1,11 @@
-type catObject = {
+type CatObject = {
     id: string;
     url: string;
-    width?: number | undefined;
-    hegth?: number | undefined;
+    width?: number;
+    hegth?: number;
 }
 
-type userActionType = {
+type UserActionType = {
     id: string,
     status: string,
     type: string,
@@ -34,4 +34,4 @@ type BreedItem = {
 
 type BreedItemShort = Pick<BreedItem, 'id' | 'name' | 'image'>
 
-export type { catObject, userActionType, BreedItem, BreedItemShort }
+export type { CatObject, UserActionType, BreedItem, BreedItemShort }
