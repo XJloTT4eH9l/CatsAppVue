@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue';
     import { useRoute } from 'vue-router';
-    import { API_URL, API_KEY } from '@/catApi';
+    import { useApiRequests } from '@/stores/apiRequests';
     import type { Ref } from 'vue';
     import type { BreedItem } from '@/types';
 
@@ -13,31 +13,16 @@
     import '../assets/variables.scss';
     import '../assets/breed-item-page.scss';
 
+    const apiRequests = useApiRequests();
     const route = useRoute();
-    const id = route.params.id;
+    const id = route.params.id as string;
     const breedInfo: Ref<BreedItem | null> = ref(null);
-    const isLoading: Ref<boolean> = ref(false);
-
-    const getBreedInfo = async () => {
-        try {
-            isLoading.value = true;
-            const responce = await fetch(`${API_URL}breeds/${id}?api_key=${API_KEY}`);
-
-            if(!responce.ok) {
-                throw new Error('Cant get data')
-            }
-
-            const responceJson = await responce.json();
-            breedInfo.value = responceJson;
-        } catch (error) {
-            console.log(error)
-        } finally {
-            isLoading.value = false;
-        }
-    }
 
     onMounted(() => {
-        getBreedInfo()
+        apiRequests.getBreedItem(id).then(res => {
+            if(!res) return
+            breedInfo.value = res;
+        });
     })
 </script>
 
@@ -49,7 +34,7 @@
             <PageTitle title="Breeds" />
             <div class="page-title">{{ id }}</div>
         </div>
-        <Loader v-if="isLoading" />
+        <Loader v-if="apiRequests.isLoading" />
         <template v-else-if="breedInfo">
             <img 
                 v-if="breedInfo.reference_image_id"

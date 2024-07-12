@@ -29,7 +29,7 @@
         <h2 class="title-empty" v-else>No cats found</h2>
 
         <UserActionLogs 
-            v-if="userLogsStore.getFavoriteLogs.length > 0"
+            v-if="userLogsStore.getFavoriteLogs.length > 0 && savedCatsStore.favoriteCats.length > 0"
             :logs="userLogsStore.getFavoriteLogs" 
         /> 
     </section>

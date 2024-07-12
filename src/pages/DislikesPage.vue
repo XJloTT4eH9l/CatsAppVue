@@ -29,7 +29,7 @@
         <h2 class="title-empty" v-else>No cats found</h2>
 
         <UserActionLogs 
-            v-if="userLogsStore.getDislikesLogs.length > 0"
+            v-if="userLogsStore.getDislikesLogs.length > 0 && savedCatsStore.dislikedCats.length > 0"
             :logs="userLogsStore.getDislikesLogs" 
         /> 
     </section>

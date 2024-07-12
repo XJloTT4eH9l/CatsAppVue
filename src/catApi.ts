@@ -3,5 +3,6 @@ const API_KEY: string = 'live_dZZLBOT6z3srOoqqAnsCOPBsTzSgsWVlKf8oEDDEoj8bn2T9Vv
 
 const VOTING_IMG: string = `${API_URL}images/search?api_key=${API_KEY}`;
 const BREEDS: string = `${API_URL}breeds?api_key=${API_KEY}`;
+const BREEDS_ITEM: string = `${API_URL}breeds/id?api_key=${API_KEY}`;
 
-export { API_URL, VOTING_IMG, BREEDS, API_KEY }
+export { API_URL, VOTING_IMG, BREEDS, API_KEY, BREEDS_ITEM }

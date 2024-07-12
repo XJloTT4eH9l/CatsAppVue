@@ -15,23 +15,20 @@
     const apiRequests = useApiRequests();
     const breedsList: Ref<BreedItemShort[]> = ref([]);
     const sorting: Ref<string> = ref('down');
+    const limit: Ref<string> = ref('All');
     const limitOptions: string[] = ['All', '5', '10', '15', '20'];
 
-    const getBreedsHandler = (params?: string): void => {
-        apiRequests.getBreeds(sorting.value, params).then(res => {
+    const getBreedsHandler = (): void => {
+        const searchParams = new URLSearchParams({ limit: limit.value === 'All' ? '' : limit.value });
+        apiRequests.getBreeds(sorting.value, searchParams.toString()).then(res => {
             if(!res) return
             breedsList.value = res;
         });
     }
 
     const onLimitChanged = (option: string): void => {
-        if(option === 'All') {
-            getBreedsHandler();
-            return
-        }
-
-        const searchParams = new URLSearchParams({ limit: option });
-        getBreedsHandler(searchParams.toString());
+        limit.value = option;
+        getBreedsHandler();
     }
 
     const sortingHandler = (sortOption: string): void => {
