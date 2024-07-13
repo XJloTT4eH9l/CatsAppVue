@@ -8,6 +8,28 @@
     }>()
 
     const savedCatsStore = useSavedCats();
+
+    const onCatClick = (cat: CatObject, type: string): void => {
+        let isAdded;
+
+        switch (type) {
+            case 'likes':
+                isAdded = savedCatsStore.likedCats.find(item => item.id === cat.id);
+                break;
+            case 'dislikes':
+                isAdded = savedCatsStore.dislikedCats.find(item => item.id === cat.id);
+                break;
+            case 'favorite':
+                isAdded = savedCatsStore.favoriteCats.find(item => item.id === cat.id);
+                break;
+        }
+
+        if(isAdded) {
+            savedCatsStore.removeCatFromSaved(cat.id, type);
+        } else {
+            savedCatsStore.addCatToSaved(cat, type);
+        }
+    }
 </script>
 
 <template>
@@ -16,7 +38,7 @@
             v-for="cat in catList" 
             :key="cat.id"
             :class="['cats-list__item', type]"
-            @click="savedCatsStore.removeCatFromSaved(cat.id, type)"
+            @click="onCatClick(cat, type)"
         >
             <img :src="cat.url" :alt="cat.id">
         </li>

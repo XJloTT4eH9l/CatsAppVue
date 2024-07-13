@@ -22,11 +22,10 @@
         { name: 'Animated', value: 'gif' },
     ];
     const limitOptions: SelectItem[] = [
-        { name: 'Limit: All', value:'25' },
-        { name: 'Limit: 5', value:'5' },
-        { name: 'Limit: 10', value:'10' },
-        { name: 'Limit: 15', value:'15' },
-        { name: 'Limit: 20', value:'20' },
+        { name: '5 items per page', value:'5' },
+        { name: '10 items per page', value:'10' },
+        { name: '15 items per page', value:'15' },
+        { name: '20 items per page', value:'20' },
     ];
 
     const apiRequests = useApiRequests();
@@ -71,20 +70,25 @@
         <div class="filters">
             <div class="filters__top">
                 <Select 
+                    label="order"
                     :selectOptions="orderOptions"
                     @handleChange="onOrderChange"
                 />
                 <Select 
+                    label="type"
                     :selectOptions="typeOptions"
                     @handleChange="onTypeChange"
                 />
             </div>
             <div class="filters__bottom">
                 <Select
+                    label="limit"
                     :selectOptions="limitOptions"
                     @handleChange="onLimitChange"
                 />
-                <button class="filters__get-btn" @click="getImages" />
+                <div class="select-wrapper">
+                    <button class="filters__get-btn" @click="getImages" />
+                </div>
             </div>
         </div>
         <Loader v-if="apiRequests.isLoading" />
@@ -105,7 +109,13 @@
         border-radius: 20px;
         background-color: $gray_light;
         .select {
-            width: 50%;
+            &-wrapper {
+                width: 50%;
+                @media screen and (max-width: 580px) {
+                    width: 100%;
+                }
+            }
+            width: 100%;
             background-color: $white;
             color: $black;
             justify-content: space-between;
@@ -120,17 +130,26 @@
             justify-content: space-between;
             gap: 20px;
             margin-bottom: 10px;
+            @media screen and (max-width: 580px) {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
         &__bottom {
             display: flex;
-            align-items: center;
+            align-items: end;
             justify-content: space-between;
             gap: 20px;
             .select {
                 width: 100%;
             }
+            @media screen and (max-width: 580px) {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
         &__get-btn {
+            margin-left: auto;
             width: 40px;
             height: 40px;
             min-width: 40px;
@@ -139,6 +158,9 @@
             background-color: $white;
             border-radius: 10px;
             transition: background-color 0.2s linear;
+            @media screen and (max-width: 580px) {
+                width: 100%;
+            }
             &::before {
                 content: '';
                 display: block;
