@@ -1,14 +1,14 @@
 <script setup lang="ts">
     import { ref } from 'vue';
-    import type { Ref } from 'vue'; 
+    import type { Ref } from 'vue';
+    import type { SelectItem } from '@/types';
 
-    const { name, selectOptions } = defineProps<{
-        name: string,
-        selectOptions: string[]
+    const { selectOptions } = defineProps<{
+        selectOptions: SelectItem[]
     }>()
 
     const isSelectOpen:Ref<boolean> = ref(false);
-    const currentItem:Ref<string> = ref(selectOptions[0]);
+    const currentItem:Ref<SelectItem> = ref(selectOptions[0]);
 
     const emit = defineEmits<{
         (e: 'handleChange', option: string): void,
@@ -16,9 +16,9 @@
 
     const selectToggle = () => isSelectOpen.value = !isSelectOpen.value;
 
-    const onSelectChange = (option: string) => {
+    const onSelectChange = (option: SelectItem) => {
         currentItem.value = option;
-        emit('handleChange', option);
+        emit('handleChange', option.value);
         selectToggle();
     }
 </script>
@@ -29,16 +29,16 @@
         :class="isSelectOpen && 'active'"
         @click.stop="selectToggle"
     >
-        <div class="select__current-item">{{ name + ': ' + currentItem }}</div>
+        <div class="select__current-item">{{ currentItem.name}}</div>
         <div class="select__content">
             <div 
                 v-for="option in selectOptions"
-                :key="option"
+                :key="option.name"
                 class="select__item"
-                :class="option === currentItem && 'active'"
+                :class="option.value === currentItem.value && 'active'"
                 @click.stop="onSelectChange(option)"
             >
-                {{ name + ': ' + option }}
+                {{ option.name }}
             </div>
         </div>
         <div @click.stop="selectToggle" class="select__overlay" />

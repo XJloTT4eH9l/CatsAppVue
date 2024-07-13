@@ -59,11 +59,16 @@ export const useApiRequests = defineStore('apiRequests', () => {
         return await fetchHelper(BREEDS_ITEM.replace('id', id));
     };
 
+    const getGalleryItems = async (params: string): Promise<CatObject[] | null> => {
+        return await fetchHelper(VOTING_IMG, params);
+    }
+
     return {
         isLoading,
         isError,
         getVote,
         getBreeds,
-        getBreedItem
+        getBreedItem,
+        getGalleryItems
     }
 });

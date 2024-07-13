@@ -412,7 +412,6 @@ body {
     border: 2px solid transparent;
     cursor: pointer;
     transition: border-color 0.2s linear;
-    z-index: 20;
     &:hover {
         border-color: $pink_hover;
     }
@@ -424,6 +423,9 @@ body {
             display: block;
             cursor: default;
         }
+        &::after {
+            transform: rotate(180deg);
+        }
     }
     &::after {
         content: '';
@@ -432,6 +434,7 @@ body {
         height: 12px;
         min-width: 12px;
         margin-left: 8px;
+        transition: transform 0.2s ease-in;
         background-repeat: no-repeat;
         background-position: center;
         background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_1_153)'%3E%3Cpath d='M6.59406 9.17417L11.7538 4.01436C12.0821 3.68616 12.0821 3.15395 11.7538 2.82587C11.4256 2.4978 10.8935 2.4978 10.5655 2.82587L5.99993 7.39154L1.43458 2.82606C1.10635 2.49792 0.574264 2.49792 0.24617 2.82606C-0.0820567 3.15414 -0.0820567 3.68628 0.24617 4.01447L5.40591 9.17431C5.57003 9.33836 5.78492 9.42029 5.9999 9.42029C6.21498 9.42029 6.43002 9.3382 6.59406 9.17417Z' fill='%238C8C8C'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1_153'%3E%3Crect width='12' height='12' fill='white' transform='matrix(0 -1 1 0 0 12)'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
@@ -467,7 +470,6 @@ body {
         z-index: 15;
     }
 }
-
 // .cats-list {
 //     display: grid;
 //     grid-template-columns: repeat(3, 1fr);

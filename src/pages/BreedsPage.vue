@@ -1,6 +1,8 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue';
     import { useApiRequests } from '@/stores/apiRequests';
+    import type { BreedItemShort, SelectItem } from '@/types';
+    import type { Ref } from 'vue';
 
     import HeaderPanel from '@/components/HeaderPanel.vue';
     import BackButton from '@/components/BackButton.vue';
@@ -9,17 +11,20 @@
     import Select from '@/components/Select.vue';
     import Loader from '@/components/Loader.vue';
 
-    import type { BreedItemShort } from '@/types';
-    import type { Ref } from 'vue';
-
     const apiRequests = useApiRequests();
     const breedsList: Ref<BreedItemShort[]> = ref([]);
     const sorting: Ref<string> = ref('down');
     const limit: Ref<string> = ref('All');
-    const limitOptions: string[] = ['All', '5', '10', '15', '20'];
+    const limitOptions: SelectItem[] = [
+        { name: 'Limit: All', value:'' },
+        { name: 'Limit: 5', value:'5' },
+        { name: 'Limit: 10', value:'10' },
+        { name: 'Limit: 15', value:'15' },
+        { name: 'Limit: 20', value:'20' },
+    ];
 
     const getBreedsHandler = (): void => {
-        const searchParams = new URLSearchParams({ limit: limit.value === 'All' ? '' : limit.value });
+        const searchParams = new URLSearchParams({ limit: limit.value  });
         apiRequests.getBreeds(sorting.value, searchParams.toString()).then(res => {
             if(!res) return
             breedsList.value = res;
@@ -51,7 +56,6 @@
             </div>
             <div class="page-header__right">
                 <Select 
-                    name="Limit"
                     :selectOptions="limitOptions"
                     @handleChange=onLimitChanged
                 />

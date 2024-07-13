@@ -32,6 +32,11 @@ type BreedItem = {
     reference_image_id?: string;
 }
 
-type BreedItemShort = Pick<BreedItem, 'id' | 'name' | 'image'>
+type BreedItemShort = Pick<BreedItem, 'id' | 'name' | 'image'>;
 
-export type { CatObject, UserActionType, BreedItem, BreedItemShort }
+type SelectItem = {
+    name: string,
+    value: string
+}
+
+export type { CatObject, UserActionType, BreedItem, BreedItemShort, SelectItem }
