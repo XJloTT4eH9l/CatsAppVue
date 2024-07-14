@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue';
     import { useApiRequests } from '@/stores/apiRequests';
+    import { storeToRefs } from 'pinia';
     import type { CatObject, SelectItem } from '@/types';
     import type { Ref } from 'vue';
 
@@ -10,6 +11,7 @@
     import Select from '@/components/Select.vue';
     import CatList from '@/components/CatList.vue';
     import Loader from '@/components/Loader.vue';
+    import ErrorMessage from '@/components/ErrorMessage.vue';
 
     const orderOptions: SelectItem[] = [
         { name: 'Random', value: 'RANDOM' },
@@ -29,6 +31,8 @@
     ];
 
     const apiRequests = useApiRequests();
+    const { isLoading, isError } = storeToRefs(apiRequests);
+    const { getGalleryItems } = apiRequests;
     const galleryItems: Ref<CatObject[]> = ref([]);
     const order: Ref<string> = ref(orderOptions[0].value);
     const type: Ref<string> = ref(typeOptions[0].value);
@@ -36,7 +40,7 @@
 
     const getImages = (): void => {
         const searchParams = new URLSearchParams({ order: order.value, mime_types: type.value, limit: limit.value  });
-        apiRequests.getGalleryItems(searchParams.toString()).then(res => {
+        getGalleryItems(searchParams.toString()).then(res => {
             if(!res) return
             galleryItems.value = res;
         });
@@ -54,6 +58,8 @@
         limit.value = option;
         getImages();
     };
+
+    const errorReload = () => getImages();
 
     onMounted(() => {
         getImages();
@@ -91,11 +97,15 @@
                 </div>
             </div>
         </div>
-        <Loader v-if="apiRequests.isLoading" />
+        <Loader v-if="isLoading" />
         <CatList 
             v-else-if="galleryItems.length > 0"
             :catList="galleryItems"
             type="favorite"
+        />
+        <ErrorMessage 
+            v-if="isError"
+            @reload="errorReload"
         />
     </section>
 </template>

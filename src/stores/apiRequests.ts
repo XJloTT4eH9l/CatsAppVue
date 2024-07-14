@@ -10,7 +10,9 @@ export const useApiRequests = defineStore('apiRequests', () => {
 
     const fetchHelper = async (url: string, params?: string, sort?: string): Promise<any> => {
         try {
+            isError.value = false;
             isLoading.value = true;
+
             let fetchUrl: string = url;
 
             if(params) {
@@ -30,7 +32,7 @@ export const useApiRequests = defineStore('apiRequests', () => {
             if(sort) {
                 return sortBreeds(responceJson, sort);
             }
-
+            
             return responceJson
         } catch (error) {
             isError.value = true;

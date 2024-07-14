@@ -2,6 +2,7 @@
     import { ref, onMounted } from 'vue';
     import { useRoute } from 'vue-router';
     import { useApiRequests } from '@/stores/apiRequests';
+    import { storeToRefs } from 'pinia';
     import type { Ref } from 'vue';
     import type { BreedItem } from '@/types';
 
@@ -9,21 +10,28 @@
     import BackButton from '@/components/BackButton.vue';
     import PageTitle from '@/components/PageTitle.vue';
     import Loader from '@/components/Loader.vue';
+    import ErrorMessage from '@/components/ErrorMessage.vue';
 
     import '../assets/variables.scss';
     import '../assets/breed-item-page.scss';
 
     const apiRequests = useApiRequests();
+    const { isLoading, isError } = storeToRefs(apiRequests);
+    const { getBreedItem } = apiRequests;
     const route = useRoute();
     const id = route.params.id as string;
     const breedInfo: Ref<BreedItem | null> = ref(null);
 
-    onMounted(() => {
-        apiRequests.getBreedItem(id).then(res => {
+    const getBreedItemInfo = (): void => {
+        getBreedItem(id).then(res => {
             if(!res) return
             breedInfo.value = res;
         });
-    })
+    };
+
+    onMounted(() => {
+        getBreedItemInfo();
+    });
 </script>
 
 <template>
@@ -34,7 +42,7 @@
             <PageTitle title="Breeds" />
             <div class="page-title">{{ id }}</div>
         </div>
-        <Loader v-if="apiRequests.isLoading" />
+        <Loader v-if="isLoading" />
         <template v-else-if="breedInfo">
             <img 
                 v-if="breedInfo.reference_image_id"
@@ -61,5 +69,9 @@
                 </div>
             </div>
         </template>
+        <ErrorMessage
+            v-if="isError"
+            @reload="getBreedItemInfo" 
+        />
     </section>
 </template>

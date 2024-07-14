@@ -3,6 +3,7 @@
     import { useSavedCats } from '@/stores/savedCats';
     import { useUserLogs } from '@/stores/userLogs';
     import { useApiRequests } from '@/stores/apiRequests';
+    import { storeToRefs } from 'pinia';
 
     import type { CatObject } from '@/types';
 
@@ -11,12 +12,25 @@
     import PageTitle from '@/components/PageTitle.vue';
     import Loader from '@/components/Loader.vue';
     import UserActionLogs from '@/components/UserActionLogs.vue';
+    import ErrorMessage from '@/components/ErrorMessage.vue';
 
     const savedCatsStore = useSavedCats();
     const userLogsStore = useUserLogs();
     const apiRequests = useApiRequests();
     
+    const { isLoading, isError } = storeToRefs(apiRequests);
+    const { getVote } = apiRequests;
     const catInfo = ref<CatObject | null>(null);
+
+    const getVoteImg = () => {
+        getVote().then(result => {
+            if(!result) {
+                return
+            }
+            
+            catInfo.value = result[0];
+        });
+    };
 
     const saveCat = (type: string) => {
         if(!catInfo.value) {
@@ -24,25 +38,12 @@
         }
 
         savedCatsStore.addCatToSaved(catInfo.value, type);
-        
-        apiRequests.getVote().then(result => {
-            if(!result) {
-                return
-            }
-            
-            catInfo.value = result[0];
-        });
-    }
+        getVoteImg();
+    };
     
     onMounted(() => {
-        apiRequests.getVote().then(result => {
-            if(!result) {
-                return
-            }
-
-            catInfo.value = result[0];
-        });
-    })
+        getVoteImg();
+    });
 </script>
 
 <template>
@@ -52,30 +53,35 @@
             <BackButton />
             <PageTitle />
         </div>
+        <template v-if="!isError">
+            <div class="img-container">
+                <Loader v-if="isLoading" />
+                <template v-else-if="catInfo">
+                    <img 
+                        class="cat-img"
+                        :src="catInfo.url"
+                        :width="catInfo?.width"
+                        :height="catInfo?.hegth" 
+                        :alt="catInfo.id"
+                    >
+                    <div class="voting-actions">
+                        <button @click="saveCat('likes')" class="voting-actions__button like"></button>
+                        <button @click="saveCat('favorite')" class="voting-actions__button favorite"></button>
+                        <button @click="saveCat('dislikes')" class="voting-actions__button dislike"></button>
+                    </div>
+                </template>
+            </div>
 
-        <div class="img-container">
-            <Loader v-if="apiRequests.isLoading" />
-            <template v-else>
-                <img
-                    v-if="catInfo !== null"  
-                    class="cat-img"
-                    :src="catInfo.url"
-                    :width="catInfo?.width"
-                    :height="catInfo?.hegth" 
-                    :alt="catInfo.id"
-                >
-                <div class="voting-actions">
-                    <button @click="saveCat('likes')" class="voting-actions__button like"></button>
-                    <button @click="saveCat('favorite')" class="voting-actions__button favorite"></button>
-                    <button @click="saveCat('dislikes')" class="voting-actions__button dislike"></button>
-                </div>
-            </template>
-        </div>
+            <UserActionLogs 
+                v-if="userLogsStore.userLogs.length > 0"
+                :logs="userLogsStore.userLogs" 
+            /> 
+        </template>
 
-        <UserActionLogs 
-            v-if="userLogsStore.userLogs.length > 0"
-            :logs="userLogsStore.userLogs" 
-        /> 
+        <ErrorMessage 
+            v-if="isError"
+            @reload="getVoteImg"
+        />
     </section>
 </template>
 
