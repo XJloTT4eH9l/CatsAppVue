@@ -14,6 +14,9 @@
     const { searchBreeds } = apiRequests;
     const searchValue: Ref<string> = ref('');
     const searchedBreeds: Ref<BreedItemShort[]> = ref([]);
+    const searchOpen: Ref<boolean> = ref(false);
+    
+    const searchToggle = () => searchOpen.value = !searchOpen.value; 
 
     watch(searchValue, () => {
         const searchParams = new URLSearchParams({ q: searchValue.value  });
@@ -36,10 +39,16 @@
                     id="search-breeds"
                     class="header__input"
                     placeholder="Search for breeds by name"
+                    @click.stop="searchToggle"
                 >
                 <div 
+                    class="search-overlay" 
+                    :class="searchOpen && 'active'" 
+                    @click.stop="searchToggle" 
+                />
+                <div 
                     class="search-breeds" 
-                    :class="searchValue.length > 0 && 'active'"
+                    :class="searchOpen && searchValue.length > 0 && 'active'"
                 >
                     <Loader v-if="isSearchLoading" />
                     <p 
@@ -52,6 +61,7 @@
                         <RouterLink 
                             v-for="item in searchedBreeds"
                             :to="{ name: 'BreedsItemPage', params: {id: item.id} }" 
+                            @click="searchToggle"
                             class="search-breeds__item"
                         >
                             {{ item.name }}
@@ -186,7 +196,7 @@
         background-color: $white;
         padding: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 10;
+        z-index: 20;
         max-height: 200px;
         overflow-y: auto;
         &.active {
@@ -206,6 +216,18 @@
             &:hover {
                 color: $pink;
             }
+        }
+    }
+    .search-overlay {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 15;
+        &.active {
+            display: block;
         }
     }
 </style>
