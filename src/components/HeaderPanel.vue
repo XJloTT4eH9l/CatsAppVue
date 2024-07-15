@@ -1,7 +1,27 @@
 <script setup lang="ts">
+    import { ref, watch } from 'vue';
     import { RouterLink } from 'vue-router';
+    import { useApiRequests } from '@/stores/apiRequests';
+    import { storeToRefs } from 'pinia';
+    import type { Ref } from 'vue';
+    import type { BreedItemShort } from '@/types';
 
     import MobileMenu from '@/components/MobileMenu.vue';
+    import Loader from '@/components/Loader.vue';
+
+    const apiRequests = useApiRequests();
+    const { isSearchLoading, isSearchError } = storeToRefs(apiRequests);
+    const { searchBreeds } = apiRequests;
+    const searchValue: Ref<string> = ref('');
+    const searchedBreeds: Ref<BreedItemShort[]> = ref([]);
+
+    watch(searchValue, () => {
+        const searchParams = new URLSearchParams({ q: searchValue.value  });
+        searchBreeds(searchParams.toString()).then(res => {
+            if(!res) return;
+            searchedBreeds.value = res;
+        });
+    });
 </script>
 
 <template>
@@ -9,13 +29,36 @@
         <div class="header__left">
             <MobileMenu />
             <div class="header__input-container">
-                <label class="header__search-icon" for="search"/>
+                <label class="header__search-icon" for="search" />
                 <input
+                    v-model="searchValue"
                     type="text"
-                    id="search"
+                    id="search-breeds"
                     class="header__input"
                     placeholder="Search for breeds by name"
                 >
+                <div 
+                    class="search-breeds" 
+                    :class="searchValue.length > 0 && 'active'"
+                >
+                    <Loader v-if="isSearchLoading" />
+                    <p 
+                        v-if="!isSearchLoading && searchValue.length > 0 && searchedBreeds.length  === 0"
+                        class="search-breeds__not-found"
+                    >
+                        Nothing been founded
+                    </p>
+                    <div class="search-breeds__items" v-if="!isSearchLoading && searchedBreeds.length > 0">
+                        <RouterLink 
+                            v-for="item in searchedBreeds"
+                            :to="{ name: 'BreedsItemPage', params: {id: item.id} }" 
+                            class="search-breeds__item"
+                        >
+                            {{ item.name }}
+                        </RouterLink> 
+                    </div>
+                    <p v-if="isSearchError" class="search-breeds__not-found">Something went wrong... Try later</p>
+                </div>
             </div>
         </div>
         <div class="header__links">
@@ -130,6 +173,38 @@
             }
             &.burger-close {
                 background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_3_2)'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M8.91223 9.99968L0.225357 1.31283L1.31321 0.224976L10.0001 8.91184L18.6869 0.224976L19.7748 1.31283L11.0879 9.99968L19.7748 18.6865L18.6869 19.7744L10.0001 11.0875L1.31321 19.7744L0.225357 18.6865L8.91223 9.99968Z' fill='%23FF868E'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_3_2'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
+            }
+        }
+    }
+    .search-breeds {
+        display: none;
+        position: absolute;
+        top: 45px;
+        left: 0;
+        width: 100%;
+        border-radius: 10px;
+        background-color: $white;
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        max-height: 200px;
+        overflow-y: auto;
+        &.active {
+            display: block;
+        }
+        &__items {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        &__item {
+            width: max-content;
+            font-size: 16px;
+            font-weight: 500;
+            color: $black;
+            transition: color 0.2s linear;
+            &:hover {
+                color: $pink;
             }
         }
     }

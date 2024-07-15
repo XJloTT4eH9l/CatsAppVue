@@ -4,5 +4,13 @@ const API_KEY: string = import.meta.env.VITE_API_KEY;
 const VOTING_IMG: string = `${API_URL}images/search?api_key=${API_KEY}`;
 const BREEDS: string = `${API_URL}breeds?api_key=${API_KEY}`;
 const BREEDS_ITEM: string = `${API_URL}breeds/id?api_key=${API_KEY}`;
+const BREED_SEARCH: string = `${API_URL}breeds/search?api_key=${API_KEY}`;
 
-export { API_URL, VOTING_IMG, BREEDS, API_KEY, BREEDS_ITEM }
+export { 
+    API_URL, 
+    VOTING_IMG, 
+    BREEDS, 
+    API_KEY, 
+    BREEDS_ITEM, 
+    BREED_SEARCH 
+}
