@@ -40,3 +40,5 @@ export const useUserLogs = defineStore('userLogs', () => {
         addLog 
     }
 });
+
+export type UserLogsStore = ReturnType<typeof useUserLogs>;

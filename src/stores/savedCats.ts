@@ -50,3 +50,5 @@ export const useSavedCats = defineStore('savedCats', () => {
         removeCatFromSaved, 
     }
 });
+
+export type SavedCatsStore = ReturnType<typeof useSavedCats>;

@@ -2,7 +2,7 @@ type CatObject = {
     id: string;
     url: string;
     width?: number;
-    hegth?: number;
+    height?: number;
 }
 
 type UserActionType = {

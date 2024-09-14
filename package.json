@@ -8,10 +8,15 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force"
+    "type-check": "vue-tsc --build --force",
+    "test": "vitest"
   },
   "dependencies": {
+    "@pinia/testing": "^0.1.5",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^25.0.0",
     "pinia": "^2.1.7",
+    "vitest": "^2.1.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
