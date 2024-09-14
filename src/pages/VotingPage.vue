@@ -61,7 +61,7 @@
                         class="cat-img"
                         :src="catInfo.url"
                         :width="catInfo?.width"
-                        :height="catInfo?.hegth" 
+                        :height="catInfo?.height" 
                         :alt="catInfo.id"
                     >
                     <div class="voting-actions">
