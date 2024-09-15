@@ -1,17 +1,10 @@
 import { setActivePinia, createPinia } from 'pinia';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { useSavedCats } from '@/stores/savedCats';
 import { useUserLogs } from '@/stores/userLogs';
 import type { SavedCatsStore } from '@/stores/savedCats';
 import type { UserLogsStore } from '@/stores/userLogs';
-import { describe, it, expect, beforeEach } from 'vitest';
-import type { CatObject } from '@/types';
-
-const mockCat: CatObject = {
-    id: 'catId',
-    url: 'www.cat-funny.com',
-    width: 230,
-    height: 100
-};
+import { mockCat } from '../mockData';
 
 const expectLog = (logs: Array<{ type: string; status: string }>, index: number, type: string, status: string) => {
     expect(logs[index].type).toBe(type);
@@ -38,6 +31,8 @@ describe('savedCats', () => {
         store.addCatToSaved(mockCat, 'likes');
 
         expect(store.likedCats[0].id).toBe(mockCat.id);
+        expect(store.dislikedCats.length).toBe(0);
+        expect(store.favoriteCats.length).toBe(0);
         expectLog(userLogsStore.userLogs, 0, 'likes', 'added');
     });
 
@@ -45,6 +40,8 @@ describe('savedCats', () => {
         store.addCatToSaved(mockCat, 'dislikes');
 
         expect(store.dislikedCats[0].id).toBe(mockCat.id);
+        expect(store.likedCats.length).toBe(0);
+        expect(store.favoriteCats.length).toBe(0);
         expectLog(userLogsStore.userLogs, 0, 'dislikes', 'added');
     });
 
@@ -52,6 +49,8 @@ describe('savedCats', () => {
         store.addCatToSaved(mockCat, 'favorite');
 
         expect(store.favoriteCats[0].id).toBe(mockCat.id);
+        expect(store.likedCats.length).toBe(0);
+        expect(store.dislikedCats.length).toBe(0);
         expectLog(userLogsStore.userLogs, 0, 'favorite', 'added');
     });
 
@@ -59,7 +58,7 @@ describe('savedCats', () => {
         store.addCatToSaved(mockCat, 'likes');
         store.removeCatFromSaved(mockCat.id, 'likes');
 
-        expect(store.likedCats).not.toContain(mockCat);
+        expect(store.likedCats).not.deep.include(mockCat);
         expectLog(userLogsStore.userLogs, 1, 'likes', 'removed');
     });
 
@@ -67,7 +66,7 @@ describe('savedCats', () => {
         store.addCatToSaved(mockCat, 'dislikes');
         store.removeCatFromSaved(mockCat.id, 'dislikes');
 
-        expect(store.dislikedCats).not.toContain(mockCat);
+        expect(store.dislikedCats).not.deep.include(mockCat);
         expectLog(userLogsStore.userLogs, 1, 'dislikes', 'removed');
     });
 
@@ -75,7 +74,7 @@ describe('savedCats', () => {
         store.addCatToSaved(mockCat, 'favorite');
         store.removeCatFromSaved(mockCat.id, 'favorite');
 
-        expect(store.favoriteCats).not.toContain(mockCat);
+        expect(store.favoriteCats).not.deep.include(mockCat);
         expectLog(userLogsStore.userLogs, 1, 'favorite', 'removed');
     });
 });
