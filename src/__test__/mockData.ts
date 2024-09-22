@@ -16,3 +16,10 @@ export function addCustomLog(type: string, status: string): UserActionType {
         status,
     }
 }
+
+export const mockRoutes = [
+    { path: '/', component: { template: '<div></div>' } },
+    { path: '/voting', component: { template: '<div></div>' } },
+    { path: '/gallery', component: { template: '<div></div>' } },
+    { path: '/breeds', component: { template: '<div></div>' } },
+];

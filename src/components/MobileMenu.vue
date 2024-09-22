@@ -1,10 +1,8 @@
 <script setup lang="ts">
     import { ref } from 'vue';
-
     import Nav from '@/components/Nav.vue';
 
     const isMobileMenuOpen = ref<boolean>(false);
-
     const mobileMenuHandler = () => {
         if(isMobileMenuOpen.value) {
             document.body.style.overflow = '';
@@ -13,7 +11,7 @@
             document.body.style.overflow = 'hidden';
             isMobileMenuOpen.value = true;
         }
-    }
+    };
 </script>
 
 <template>
